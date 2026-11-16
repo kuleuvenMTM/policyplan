@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MTM Policy Plan 2025–2029</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: formal, calm, institutional — the book is the content, the frame stays quiet
+   IDEA: a printed A4 report lying open on a desk, turned by hand
+   PICTURE: the open spread itself, as large as the screen allows
+   COLOUR and TYPE: KU Leuven blue field (#00407a / #1d8db0), white paper, Open Sans
+   LAYOUT: thin top bar with title and chapter jump, book centred, controls bar below */
+:root{color-scheme:light dark;--bg:light-dark(#e9eef2,#0c1b28);--bar:#00407a;--acc:#1d8db0;--ink:light-dark(#10202e,#e6eef4);--mut:light-dark(#4d6274,#9db3c4);--btn:light-dark(#fff,#16304a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 "Open Sans",system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+header{background:var(--bar);color:#fff;display:flex;align-items:center;gap:16px;padding:10px max(3vw,14px);flex-wrap:wrap}
+header h1{font-size:17px;font-weight:700;margin:0;flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header h1 span{font-weight:400;opacity:.8}
+select{font:inherit;font-size:16px;color:#fff;background:#0b5191;border:1px solid #3f7fb5;border-radius:6px;padding:8px 10px;min-height:40px;max-width:min(320px,100%)}
+select:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.stage{flex:1;position:relative;container-type:size;display:grid;place-items:center;padding:18px max(2vw,10px);overflow:hidden}
+.book{position:relative;aspect-ratio:1190/842;width:min(100cqw,100cqh*1.4133);perspective:2600px;transition:transform .5s ease}
+.book.cover{transform:translateX(-25%)}.book.back{transform:translateX(25%)}
+.half{position:absolute;top:0;bottom:0;width:50%;background:#fff;overflow:hidden}
+.half.L{left:0;box-shadow:-6px 8px 24px rgba(0,0,0,.18)}.half.R{right:0;box-shadow:6px 8px 24px rgba(0,0,0,.18)}
+.half.L::after,.half.R::after{content:"";position:absolute;top:0;bottom:0;width:7%;pointer-events:none}
+.half.L::after{right:0;background:linear-gradient(to left,rgba(0,0,0,.14),transparent)}
+.half.R::after{left:0;background:linear-gradient(to right,rgba(0,0,0,.12),transparent)}
+.half.empty{visibility:hidden}
+.half img,.face img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.leaf{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;z-index:5}
+.leaf.fwd{right:0;transform-origin:left center}.leaf.bwd{left:0;transform-origin:right center}
+.face{position:absolute;inset:0;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.b{transform:rotateY(180deg)}
+.leaf .shade{position:absolute;inset:0;pointer-events:none}
+.hot{position:absolute;top:0;bottom:0;width:50%;cursor:pointer;z-index:6;background:none;border:0;padding:0}
+.hot.l{left:0}.hot.r{right:0}
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:8;width:48px;height:48px;border-radius:50%;border:0;background:var(--bar);color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.nav:disabled{opacity:.25;cursor:default}
+.nav.p{left:max(1vw,6px)}.nav.n{right:max(1vw,6px)}
+footer{display:flex;align-items:center;gap:14px;padding:10px max(3vw,14px) 14px;flex-wrap:wrap;justify-content:center}
+.count{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--mut);min-width:13ch;text-align:center}
+input[type=range]{flex:1 1 260px;max-width:560px;accent-color:var(--acc);height:40px}
+.tool{background:var(--btn);color:var(--ink);border:1px solid color-mix(in srgb,var(--mut) 40%,transparent);border-radius:6px;padding:8px 14px;min-height:40px;font:inherit;cursor:pointer;white-space:nowrap}
+.hint{font-size:13px;color:var(--mut);width:100%;text-align:center;margin:0}
+/* one page at a time on narrow screens */
+.single .book{aspect-ratio:595/842;width:min(100cqw,100cqh*.7068)}
+.single .book.cover,.single .book.back{transform:none}
+.single .half{width:100%}.single .half.L{display:none}.single .half.R{left:0}
+.single .half.R img{animation:in .35s ease}
+@keyframes in{from{opacity:.2;transform:translateX(var(--dx,0))}to{opacity:1;transform:none}}
+@media(max-width:600px){header h1 span{display:none}.nav{width:44px;height:44px;opacity:.85}.hint{display:none}}
+@media(prefers-reduced-motion:reduce){.book{transition:none}.single .half.R img{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>MTM Policy Plan 2025–2029 <span>· Department of Materials Engineering, KU Leuven</span></h1>
+  <label for="toc" style="position:absolute;left:-9999px">Ga naar hoofdstuk</label>
+  <select id="toc"></select>
+</header>
+<main class="stage" id="stage">
+  <button class="nav p" id="prev" aria-label="Vorige pagina">‹</button>
+  <div class="book" id="book">
+    <div class="half L" id="L"><img alt=""></div>
+    <div class="half R" id="R"><img alt=""></div>
+    <button class="hot l" id="hl" aria-label="Terugbladeren"></button>
+    <button class="hot r" id="hr" aria-label="Verderbladeren"></button>
+  </div>
+  <button class="nav n" id="next" aria-label="Volgende pagina">›</button>
+</main>
+<footer>
+  <span class="count" id="count" aria-live="polite"></span>
+  <input type="range" id="slider" min="0" value="0" aria-label="Kies pagina">
+  <button class="tool" id="fs">Volledig scherm</button>
+  <p class="hint">Blader met de pijltjes, de pijltoetsen, door op een pagina te klikken of door te swipen.</p>
+</footer>
+<script>
+{
+const N=56, src=p=>`pages/p-${String(p).padStart(2,'0')}.jpg`;
+const chapters=[["Omslag",1],["Inhoudstafel",2],["Executive summary",4],["Implementation, monitoring and governance",6],["List of Acronyms",8],["1  Vision and mission",9],["2  Organisation of the Department",10],["3  Research strategy",14],["4  Education",29],["5  HR Policy",33],["6  SWOT",36],["7  ZAP vacancy plan",39],["8  Action Terrains",40],["9  Societal impact",52],["List of Appendices",55],["Achterflap",56]];
+const $=id=>document.getElementById(id);
+const book=$('book'),L=$('L'),R=$('R'),stage=$('stage'),slider=$('slider'),count=$('count'),toc=$('toc');
+toc.innerHTML=chapters.map(([t,p])=>`<option value="${p}">${t}</option>`).join('');
+const S=N/2; // spreads: 0=[-,1], k=[2k,2k+1], S=[N,-]
+const pagesOf=s=>s===0?[null,1]:s===S?[N,null]:[2*s,2*s+1];
+const spreadOf=p=>Math.floor(p/2);
+let single=false, pos=1, busy=false; // pos = current page number (left page or cover)
+const cache={};
+const pre=p=>{if(p>=1&&p<=N&&!cache[p]){const i=new Image();i.src=src(p);cache[p]=i}};
+function setHalf(el,p){const img=el.querySelector('img');el.classList.toggle('empty',!p);if(p){img.src=src(p);img.alt=`Pagina ${p}`}else{img.removeAttribute('src');img.alt=''}}
+function cur(){return single?pos:spreadOf(pos)}
+function render(){
+  if(single){setHalf(R,pos);book.className='book'}
+  else{const s=spreadOf(pos),[a,b]=pagesOf(s);setHalf(L,a);setHalf(R,b);book.className='book'+(s===0?' cover':s===S?' back':'')}
+  const c=cur(),max=single?N:S;
+  slider.max=max-(single?0:0);slider.min=single?1:0;slider.value=c;
+  if(single)count.textContent=`Pagina ${pos} van ${N}`;
+  else{const [a,b]=pagesOf(spreadOf(pos));count.textContent=a&&b?`Pagina ${a}–${b} van ${N}`:`Pagina ${a||b} van ${N}`}
+  $('prev').disabled=single?pos<=1:spreadOf(pos)===0;
+  $('next').disabled=single?pos>=N:spreadOf(pos)===S;
+  let ch=chapters[0][1];for(const [,p] of chapters)if(p<=(single?pos:Math.max(...pagesOf(spreadOf(pos)).filter(Boolean))))ch=p;toc.value=ch;
+  try{history.replaceState(null,'','#p'+pos)}catch(e){}
+  const base=single?pos:spreadOf(pos)*2;for(let d=-3;d<=4;d++)pre(base+d);
+}
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function flip(dir){
+  if(busy)return;
+  if(single){const np=pos+dir;if(np<1||np>N)return;pos=np;R.style.setProperty('--dx',dir*30+'px');render();return}
+  const s=spreadOf(pos),ns=s+dir;if(ns<0||ns>S)return;
+  const [a,b]=pagesOf(s),[na,nb]=pagesOf(ns);
+  const go=()=>{pos=ns===0?1:ns*2;render()};
+  if(reduce){go();return}
+  busy=true;
+  const leaf=document.createElement('div');leaf.className='leaf '+(dir>0?'fwd':'bwd');
+  const front=dir>0?b:a, back=dir>0?na:nb;
+  leaf.innerHTML=`<div class="face f"><img src="${src(front)}" alt=""><div class="shade"></div></div><div class="face b"><img src="${back?src(back):''}" alt=""><div class="shade"></div></div>`;
+  if(dir>0)setHalf(R,nb);else setHalf(L,na);
+  book.appendChild(leaf);
+  // move the book when opening the cover or closing at the back
+  book.className='book'+(ns===0?' cover':ns===S?' back':'');
+  const shades=leaf.querySelectorAll('.shade');
+  const anim=leaf.animate([{transform:'rotateY(0deg)'},{transform:`rotateY(${dir>0?-180:180}deg)`}],{duration:650,easing:'cubic-bezier(.4,.1,.3,1)'});
+  shades.forEach((sh,i)=>sh.animate([{background:'rgba(0,0,0,0)'},{background:'rgba(0,0,0,.18)'},{background:'rgba(0,0,0,0)'}],{duration:650}));
+  anim.onfinish=()=>{leaf.remove();busy=false;go()};
+}
+function goPage(p){p=Math.min(N,Math.max(1,+p||1));pos=single?p:(p===1?1:spreadOf(p)*2||1);if(!single&&spreadOf(p)===S)pos=N;render()}
+$('prev').onclick=()=>flip(-1);$('next').onclick=()=>flip(1);
+$('hl').onclick=()=>flip(-1);$('hr').onclick=()=>flip(1);
+slider.oninput=()=>{const v=+slider.value;single?goPage(v):goPage(v===0?1:v*2)};
+toc.onchange=()=>goPage(toc.value);
+addEventListener('keydown',e=>{if(e.target===toc)return;if(e.key==='ArrowRight'||e.key==='PageDown'){flip(1);e.preventDefault()}else if(e.key==='ArrowLeft'||e.key==='PageUp'){flip(-1);e.preventDefault()}else if(e.key==='Home')goPage(1);else if(e.key==='End')goPage(N)});
+let tx=null,ty=0;stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+stage.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))flip(dx<0?1:-1);tx=null},{passive:true});
+$('fs').onclick=()=>{try{const d=document;if(d.fullscreenElement)d.exitFullscreen().catch(()=>{});else d.documentElement.requestFullscreen().catch(()=>{$('fs').textContent='Niet beschikbaar'})}catch(e){$('fs').textContent='Niet beschikbaar'}};
+document.addEventListener('fullscreenchange',()=>{$('fs').textContent=document.fullscreenElement?'Sluit volledig scherm':'Volledig scherm'});
+function mode(){const s=stage.clientWidth<760;if(s!==single){single=s;document.body.classList.toggle('single',s);render()}}
+new ResizeObserver(mode).observe(stage);
+const h=/^#p(\d+)$/.exec(location.hash);if(h)pos=+h[1];
+single=stage.clientWidth<760;document.body.classList.toggle('single',single);goPage(pos);
+}
+</script>
+</body>
+</html>
